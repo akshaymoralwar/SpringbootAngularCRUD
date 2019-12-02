@@ -1,0 +1,42 @@
+<div class="container">
+    <h1> Login Form </h1> 
+    <hr>
+    <div class="col-sm-4 col-sm-offset-3 input-position">
+    <!-- <form #f action="http://localhost:8090/manager/checkIfExists" method="GET"> -->
+        <form #f=ngForm >
+        <div class="form-group">
+            Email : 
+            <input type="email" name="email" 
+            class="form-control"
+            ngModel
+            #email="ngModel"
+            required
+            >
+            <div *ngIf="!email.valid && email.touched" class="alert alert-danger">Please Enter the Email ID
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            Password : 
+            <input type="password" name="password" 
+            class="form-control"
+            ngModel
+            #password="ngModel"
+            required
+            >
+
+            <div *ngIf="!password.valid && password.touched" class="alert alert-danger">Please Enter the Password
+
+            </div>
+        </div>
+        <div class="from-group">
+            <button class="btn btn-primary" (click)="onLogin(email.value,password.value)" [disabled]="!f.valid">Login</button> &nbsp;
+            <!-- <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Login</button> &nbsp; -->
+            <!-- <input type="submit"> -->
+            <button class="btn btn-success" (click)="onSignup()">Sign up</button>
+        </div>
+    </form>
+</div>    
+</div>
