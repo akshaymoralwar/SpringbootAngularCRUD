@@ -40,64 +40,85 @@
 </div>
 
 <div class="col-md-4">
+  
   <button class="btn btn-success" style="float: right;"
   (click)="showmodal=true"
   data-toggle="modal" data-target="#myModal"
   >Add Employee</button>
-  <button class="btn btn-danger" (click)="onLogout()">Logout</button>
+<button class="btn btn-danger" (click)="onLogout()">Logout</button>
 </div>
 </div>
-
 </div>
 
 
 
 
-  <!-- Add The Modal -->
-  <div class="modal" id="myModal" [ngClass]="{'show': showmodal}">
-    <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+  <!-- Add Employee Modal -->
+  <div class="modal fade" tabindex="-1" role="dialog"
+  id="myModal" [ngClass]="{'show': showmodal}">
+    <div class="modal-dialog modal-lg modal-80p">
     <div class="modal-dialog">
       <div class="modal-content">
   
         <!-- Modal Header -->
-        <div class="modal-header" style="background-color: burlywood;">
-          <h4 class="modal-title">Employee Detail</h4>
+        <div class="modal-header">
+          <h4 class="modal-title">Enter Employee Details</h4>
           <button type="button" class="close" (click)="showmodal=false" data-dismiss="modal">&times;</button>
         </div>
   
         <!-- Modal body -->
         <div class="modal-body">
-          <div class="for-group">
-            <label for="">
-              FirstName :
-            </label>
-            <input type="text" placeholder="Enter Name" #fname class="form-control">
+          <div class="row">
+            <div class="col">
+              <input type="text" placeholder="First Name" #fname class="form-control">
+            </div>
+            <div class="col">
+              <input type="text" placeholder="Last Name" class="form-control" #lname>
+            </div>
           </div>
           <br>
-            LastName : <input type="text" placeholder="Enter Name" class="form-control" #lname>
+          <div class="row">
+            <div class="col">
+              <input type="text" placeholder="Enter Address" class="form-control" #address>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+              <div class="col">
+                <input type="date" class="form-control" #dob placeholder="D.O.B">
+              </div>
+              <div class="col">
+                <input type="text" placeholder="Enter Contact Number" class="form-control" #mob>
+              </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <input type="text" placeholder="Enter City" class="form-control" #city>
+            </div>
+            <div class="col">
+              <input type="text" placeholder="Enter Email Id" class="form-control" #email>
+            </div>
             <br>
-            Address : <input type="text" placeholder="Enter Address" class="form-control" #address>
-            <br>
-            Dob : <input type="date" class="form-control" #dob>
-            <br>
-            Mobile No. : <input type="text" placeholder="Enter Number" class="form-control" #mob>
-            <br>
-            City : <input type="text" placeholder="Enter City" class="form-control" #city>
-            <br>
-            Email : <input type="text" placeholder="Enter City" class="form-control" #email>
-            <br>
-            Organization : <input type="text" placeholder="Enter City" class="form-control" #org>
-            <br>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <input type="text" placeholder="Enter Organization" class="form-control" #org>
+            </div>
+          </div>
         </div>
 
         <!-- (click)="showmodal=false"  -->
   
         <!-- Modal footer -->
-        <div class="modal-footer" style="background-color: burlywood;">
-          <button type="submit" class="btn btn-success" 
-          (click)="showmodal=false"
-          (click)="onSubmit(fname.value,lname.value,address.value,dob.value,mob.value,city.value,email.value,org.value)"
-           data-dismiss="modal">Submit</button>
+        <div class="modal-footer">
+          <div class="text-center">
+            <button type="submit" class="btn btn-success" 
+            (click)="showmodal=false"
+            (click)="onSubmit(fname.value,lname.value,address.value,dob.value,mob.value,city.value,email.value,org.value)"
+            data-dismiss="modal">Submit</button>
+          </div>
         </div>
   
       </div>

@@ -92,7 +92,7 @@ Org:String="";
     .subscribe(response=>{
       this.router.navigate(['/Home']);
     },error=>{
-      alert("Error Occured!!!!");
+      alert("Please provide valid details....! Employee record not saved....!");
     })
   }
 
