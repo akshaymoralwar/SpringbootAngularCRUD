@@ -29,10 +29,10 @@ console.log("Password "+Password);
     this.service.postEmpLogin(createdata)
     .subscribe(response=>{
       console.log(response);
-      
+
       this.router.navigate(['/Home']);
     },error=>{
-      alert("Error Occured!!!");
+      alert("You have entered invalid login credentials");
      // this.router.navigate(['/Home']);
     })
   }

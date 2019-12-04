@@ -145,6 +145,8 @@ Org:String="";
 
   }
 
-
+onLogout(){
+  this.router.navigate([""]);
+}
 
 }

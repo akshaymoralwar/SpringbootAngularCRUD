@@ -9,15 +9,19 @@ import javax.persistence.EntityManager;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.crudoperations.bean.EmployeeBean;
+import com.example.crudoperations.controller.EmployeeController;
+import com.example.crudoperations.controller.ManagerController;
 
 /*Implementation of EmployeeDAO interface.*/
 @Repository
 public class EmployeeDAOImpl implements EmployeeDAO {
-
+	private static Logger logger = LoggerFactory.getLogger(EmployeeDAOImpl.class);
 	@Autowired
 	private EntityManager entityManager;
 
@@ -28,9 +32,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	 */
 	@Override
 	public List<EmployeeBean> get() {
-		Session currentSession = entityManager.unwrap(Session.class);
-		Query<EmployeeBean> query = currentSession.createQuery("from EmployeeBean", EmployeeBean.class);
-		List<EmployeeBean> empList = query.getResultList();
+		List<EmployeeBean> empList = null;
+		try {
+			Session currentSession = entityManager.unwrap(Session.class);
+			Query<EmployeeBean> query = currentSession.createQuery("from EmployeeBean", EmployeeBean.class);
+			empList = query.getResultList();
+		} catch (Exception e) {
+			logger.info("Exception in fetching records");
+			e.printStackTrace();
+		}
 		return empList;
 	}
 
@@ -41,8 +51,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	 */
 	@Override
 	public EmployeeBean get(int empId) {
-		Session currentSession = entityManager.unwrap(Session.class);
-		EmployeeBean employee = currentSession.get(EmployeeBean.class, empId);
+		EmployeeBean employee=null;
+		try {
+			Session currentSession = entityManager.unwrap(Session.class);
+			employee = currentSession.get(EmployeeBean.class, empId);
+		} catch (Exception e) {
+			logger.info("Employee record not found...");
+			e.printStackTrace();
+		}
 		return employee;
 	}
 
@@ -53,8 +69,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	 */
 	@Override
 	public void save(EmployeeBean employee) {
-		Session currentSession = entityManager.unwrap(Session.class);
-		currentSession.saveOrUpdate(employee);
+		try {
+			Session currentSession = entityManager.unwrap(Session.class);
+			currentSession.saveOrUpdate(employee);
+		} catch (Exception e) {
+			logger.info("Employee record cannot be saved due to exception");
+			e.printStackTrace();
+		}
 	}
 
 	/*
@@ -64,8 +85,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	 */
 	@Override
 	public void delete(int id) {
-		Session currentSession = entityManager.unwrap(Session.class);
-		EmployeeBean employee = currentSession.get(EmployeeBean.class, id);
-		currentSession.delete(employee);
+		try {
+			Session currentSession = entityManager.unwrap(Session.class);
+			EmployeeBean employee = currentSession.get(EmployeeBean.class, id);
+			currentSession.delete(employee);
+		} catch (Exception e) {
+			logger.info("Unable to delete employee record...");
+			e.printStackTrace();
+		}
 	}
 }

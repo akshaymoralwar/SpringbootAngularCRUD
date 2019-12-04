@@ -5,6 +5,8 @@ package com.example.crudoperations.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.crudoperations.CrudDemoApplication;
 import com.example.crudoperations.bean.EmployeeBean;
 import com.example.crudoperations.service.EmployeeService;
 
@@ -22,6 +25,7 @@ import com.example.crudoperations.service.EmployeeService;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class EmployeeController {
+	private static Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 	@Autowired
 	private EmployeeService employeeService;
 
@@ -34,8 +38,16 @@ public class EmployeeController {
 	 */
 	@GetMapping("/getAllEmployee")
 	public List<EmployeeBean> get() {
+		List<EmployeeBean> employeeList = null;
+		try {
+			logger.info("Fetching employees...");
+			employeeList = employeeService.get();
+		} catch (Exception e) {
+			logger.info("Exception while fetching employees...");
+			e.printStackTrace();
 
-		return employeeService.get();
+		}
+		return employeeList;
 	}
 
 	/*
@@ -49,7 +61,14 @@ public class EmployeeController {
 	 */
 	@PostMapping("/saveEmployee")
 	public EmployeeBean save(@RequestBody EmployeeBean employee) {
-		employeeService.save(employee);
+		try {
+			logger.info("Employee saved...");
+			employeeService.save(employee);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return employee;
 	}
 
@@ -62,6 +81,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("/getEmployee/{id}")
 	public EmployeeBean get(@PathVariable int id) {
+		logger.info("Fetching employee with " + id);
 		EmployeeBean employeeObj = employeeService.get(id);
 		if (employeeObj == null) {
 			throw new RuntimeException("Employee with id " + id + " not found");
@@ -79,8 +99,15 @@ public class EmployeeController {
 
 	@DeleteMapping("/deleteEmployee/{id}")
 	public String delete(@PathVariable int id) {
-		employeeService.delete(id);
-		String message = "Employee has been deleted with id " + id;
+		String message = null;
+		try {
+			logger.info("Deleting employee record with " + id);
+			employeeService.delete(id);
+			message = "Employee has been deleted with id " + id;
+		} catch (Exception e) {
+			logger.info("Exception while deleting....");
+			e.printStackTrace();
+		}
 		return message;
 	}
 
@@ -96,8 +123,14 @@ public class EmployeeController {
 
 	@PutMapping("/updateEmployee{id}")
 	public EmployeeBean update(@RequestBody EmployeeBean employeeObj, @PathVariable int id) {
-		EmployeeBean updateBean = employeeService.get(id);
-		employeeService.save(updateBean);
+		try {
+			logger.info("Updating employee with record " + id);
+			EmployeeBean updateBean = employeeService.get(id);
+			employeeService.save(updateBean);
+		} catch (Exception e) {
+			logger.info("Exception while updating....");
+			e.printStackTrace();
+		}
 		return employeeObj;
 	}
 }
