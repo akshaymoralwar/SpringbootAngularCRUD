@@ -33,3 +33,7 @@ d) To run the application, follow the steps:
 	1. Open browser (Google Chrome, Firefox, etc.)
 	2. Go to http://localhost:4200 url. The application should be running now.
 
+
+
+NOTE: 	1. Update functionality not working.
+		2. Few validations are still missing.
